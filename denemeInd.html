@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="...">
+    <meta name="description" content="...">
+    <meta name="author" content="Aydın Selvioğlu">
+    <title>Ana Sayfa - Can Hukuk Bürosu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        /* TEMEL STİLLER */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: #e0ddd0;
+        }
+
+        .nav-item {
+            font-size: large;
+            color: #bfc0c2;
+        }
+
+        .nav-link {
+            font-size: 1.15rem;
+        }
+
+        /* HEADER & NAVBAR */
+        .top-ribbon {
+            font-size: 0.95rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1040;
+            background-color: #4e565e;
+            color: white;
+            padding: 8px 0;
+            line-height: 1.2;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 24px;
+            width: 100%;
+            background-color: #c3c4b0;
+            padding: 0.5rem 0;
+            z-index: 1030;
+        }
+
+        /* SIDEBAR & MAIN CONTENT */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 138px);
+            margin-top: 138px;
+        }
+
+        .sidebar {
+            color: #160f0f;
+            padding: 15px;
+            position: fixed;
+            top: 138px;
+            left: 0;
+            height: calc(100vh - 138px);
+            overflow-y: auto;
+            width: 250px;
+            z-index: 1000;
+            overflow-x: hidden;
+            transition: width 0.3s ease;
+            border-right: dotted #adce91;
+        }
+
+        #sidebar-content {
+            padding: 10px;
+            color: #160f0f;
+            width: 100%;
+        }
+
+        .main-content {
+            background-color: #084b0b;
+            color: #160f0f;
+            padding: 20px;
+            flex-grow: 1;
+            order: 2;
+            left: 50px;
+            /* Genişletilmiş sidebar genişliği */
+            transition: margin-left 0.3s ease;
+        }
+
+        .carousel-item active {
+            background-color: #d9ddce;
+            height: auto;
+        }
+        .carousel-item {
+    background-color: #d3dac0;
+    height: auto;
+    min-height: 400px;
+}
+
+.carousel-caption {
+    background-color: rgba(236, 234, 229, 0.85);
+    padding: 1rem 0.8rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(221, 80, 80, 0.1);
+}
+
+
+        @media (min-width: 992px) {
+            .content-wrapper {
+                flex-direction: row;
+            }
+
+            .sidebar {
+                width: auto;
+                /* Ekran genişken yüzde bazlı genişlik */
+                min-width: 200px;
+                /* Minimum genişlik */
+                max-width: 250px;
+                /* Maksimum genişlik */
+            }
+
+            .main-content {
+                width: 150%;
+
+                padding-left: 20px;
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #d4d6d8;
+            color: #160f0f;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* GÖRSEL STİLLER */
+        .background-container,
+        .background-container-carousel {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+
+        .background-container {
+            height: 150px;
+        }
+
+        .background-container-carousel {
+            height: 150px;
+            background-image: url('assets/images/hukuk1.jpg');
+        }
+
+        .background-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/images/hukuk1.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons a {
+            text-decoration: none;
+            color: #88001b;
+            background-color: #c8d3c9;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            flex: 1 1 auto;
+            min-width: 120px;
+            max-width: 220px;
+            text-align: center;
+        }
+
+        .profile-img {
+            max-width: 200px;
+            margin: 0 auto;
+            display: block;
+            height: auto;
+        }
+
+        .team-member-img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .carousel-75 {
+            height: auto;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .carousel-75 {
+                width: 75%;
+            }
+        }
+
+        .carousel-item img {
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+            border-radius: 0.8rem;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 150px;
+            z-index: 1;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            text-align: center;
+            width: 90%;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-caption ul {
+            text-align: left;
+            margin-top: 10px;
+            padding-left: 20%;
+        }
+
+        .carousel-item {
+            transition: background-color 0.6s ease;
+            border-radius: 1.5rem;
+            border: groove 1px #c6d4ba;
+            padding: 15px;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .carousel-control-prev {
+            left: -2.7rem;
+        }
+
+        .carousel-control-next {
+            right: -2.5rem;
+        }
+
+        .dot {
+            padding: 0 5px;
+            /* Space around the dot */
+            vertical-align: middle;
+            /* Vertical centering */
+            font-size: 1.2em;
+            /* Slightly larger dot */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .navbar {
+                top: 38px;
+                padding: 0.5rem 1rem;
+            }
+
+            .navbar-collapse {
+                background-color: #ecebe7;
+                margin-top: 0.5rem;
+                padding: 1rem;
+                border-radius: 1.5rem;
+            }
+
+            .content-wrapper {
+                margin-top: 200px;
+            }
+
+            .top-ribbon {
+                font-size: 0.85rem;
+                padding: 6px 0;
+            }
+
+            .sidebar {
+                order: 1;
+                width: 60px;
+                padding: 5px;
+            }
+
+            .main-content {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item {
+                min-height: 500px;
+            }
+
+            .carousel-caption {
+                position: relative;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                padding: 15px;
+            }
+
+            .carousel-caption h3,
+            .carousel-caption h4 {
+                font-size: 1.2rem !important;
+            }
+
+            .carousel-caption ul {
+                font-size: 0.9rem !important;
+                padding-left: 15px;
+            }
+
+            .background-container-carousel {
+                height: auto;
+            }
+
+            .display-4 {
+                font-size: 2rem;
+            }
+
+            .top-ribbon {
+                width: auto;
+            }
+
+            @media (max-width: 576px) {
+                .carousel-item {
+                    min-height: 550px;
+                }
+
+                .carousel-caption ul {
+                    font-size: 0.8rem !important;
+                }
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <!--ribbon başlangıç-->
+        <div class="top-ribbon">
+            <div class="container d-flex justify-content-between flex-wrap small">
+                <div>
+                    <a href="..." class="bi bi-geo-alt-fill" style="color: #3d8800;"></a> MiA e.V. Adenauerallee 8 20097
+                    Hamburg
+                </div>
+                <div class="d-flex align-items-center ms-3">
+                    <a href="https://instagram.com/kochukukburosu01" class="text-white me-3" target="_blank"><i
+                            class="bi bi-instagram"></i></a>
+
+                </div>
+                <div>
+                    <i class="bi bi-envelope-fill"></i> <a href="mailto:av.birsu.koc@gmail.com"
+                        class="text-light text-decoration-none">canhukuk@gmail.com</a>
+                    &nbsp; | &nbsp;
+                    <i class="bi bi-telephone-fill"></i> <a href="tel:+903225033534"
+                        class="text-light text-decoration-none">+49 322 503 35 34 |</a>
+                    <!-- Dil seçenekleri -->
+
+                    <a href="index.html" class="text-light text-decoration-none">Türkçe |</a>
+                    <a href="indexDeutsch.html" class="text-light text-decoration-none">Deutsch</a>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Ribbon son-->
+
+        <!--navigasyon bar başlangıç-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+
+                <a class="navbar-brand d-flex align-items-center" href="index.html">
+                    <img src="/assets/images/canHukuk7a.jpg  " alt="Logo" width="100" height="90" class="me-2">
+                    <span style="color:#88001b; font-size: 1.4rem; margin: 0;">Can Hukuk Bürosu </span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="index.html">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link text-dark" href="ekibimiz.html">Ekibimiz ve İş
+                                Ortaklarımız</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="hizmetlerimiz.html">Hizmetlerimiz</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="sikcaSorulanSorular.html">Sıkça Sorulan Sorular</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="iletisim.html">İletişim</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center ms-3">
+                    <a href="tel:+903225033534" class="text-dark me-3"><i class="bi bi-telephone"></i></a>
+                    <a href="https://www.instagram.com/kochukukburosu01/" class="text-dark me-3" target="_blank"><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="mailto:canhukuk@gmail.com" class="text-dark"><i class="bi bi-envelope"></i></a>
+                </div>
+            </div>
+        </nav>
+        <!--navigasyon bar son-->
+    </header>
+
+    <div class="content-wrapper">
+
+        <!--sidebar başlangıç-->
+
+
+        <div id="sidebar" style="background-color: #d1d0be;">
+            <div id="sidebar-content">
+                <div class="container-fluid">
+
+                    <br>
+                    <div class="row text-center text-dark"
+                        style="color: #bb3c3c;border-top-style: groove; border-bottom-style: groove ; border-color: #3d8800;">
+                        <h5>Avukat </h5>
+                        <h5>Dr. Hakan Mertcan</h5>
+                        <h5>Can Hukuk Bürosu</h5>
+                    </div>
+                    <br><br>
+                    <h6 style="color:#88001b;">Türkiye'de İşbirliği İçinde Olduğumuz Ofisler</h6>
+                    <div class="row text-center"
+                        style="border-bottom-style:groove; border-top-style:groove; border-color: #88001b;">
+
+                        <ul>
+
+                            <li style="color:#343a40; "><a href="www.birsukoc.av.tr">Av. Birsu Koç |
+                                    Koç Hukuk Bürosu-Adana</a> </li>
+                            <li style="color:#343a40; align-content: baseline;">Av. Sezgin Kesim - Ankara </li>
+                        </ul>
+                    </div>
+                    <br>
+
+                </div>
+            </div>
+        </div>
+
+        <!--sidebar bitiş-->
+
+        <div class="main-content text-dark">
+            <div class="background-container">
+
+
+                <h2 class="text-center"
+                    style="color:#c9b7ba ;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                    <strong>Can Hukuk Bürosu- Bilgi<span class="dot">•</span> Deneyim<span class="dot">•</span> Güven
+                    </strong>
+                </h2>
+
+
+                <div class="cta-buttons">
+                    <a href="tel:+903225033534"><i class="bi bi-telephone-fill me-2"></i>Bizi Arayın</a>
+                    <a href="mailto:av.birsu.koc@gmail.com"><i class="bi bi-envelope me-2"></i>Bize Yazın</a>
+
+                </div>
+            </div>
+
+            <!--backgroundun sonu-->
+
+            <div id="colorCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#colorCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#colorCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#colorCarousel" data-bs-slide-to="2"></button>
+                </div>
+
+                <div class="carousel-inner">
+
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active"
+                        style="background-color: #d3dac0; height: auto; min-height: 400px;">
+                        <div
+                            class="carousel-caption d-flex flex-column justify-content-center align-items-start text-start">
+
+                            <div class="row"
+                                style="position: relative; z-index: 1; background-color: rgba(236, 234, 229, 0.85); padding: 1rem 0.8rem; border-radius: 10px; box-shadow: 0 0 15px rgba(221, 80, 80, 0.1); width: 100%; top: 0;">
+                                <div class="w-100 text-center">
+                                    <h3
+                                        style="color: #88001b; font-weight: bold; font-size: 1.4rem; margin-bottom: 0.4rem;">
+                                        Türkiye'deki hukuksal işleriniz emin ellerde...</h3>
+                                    <img src="assets/images/adalet11.jpg" alt=""
+                                        style="width: 100%; height: 4rem; object-fit: cover; opacity: 0.4; position: relative; top: 0; left: 0; ;">
+
+                                </div>
+
+                                <ul style="list-style: square;  font-size: 1.1rem; line-height: 1.6;">
+                                    <li><strong>Miras işleri:</strong> Tapu, mirasçılık belgesi, paylaşım...</li>
+                                    <li><strong>Emeklilik işlemleri:</strong> Türkiye’deki emeklilik sürecinizi baştan
+                                        sona yürütüyoruz.</li>
+                                    <li><strong>Boşanma, tanıma-tenfiz:</strong> Türkiye’de boşandınız ama Almanya’da
+                                        geçerli değil mi?</li>
+                                    <li><strong>Alacaklar ve icralar:</strong> Hakkınızı arıyoruz, sizin yerinize tahsil
+                                        ediyoruz.</li>
+                                    <li><strong>Şirket mi kurmak istiyorsunuz?</strong> Türkiye’de iş kurmanın her
+                                        adımında yanınızdayız.</li>
+                                    <li><strong>Vergi & Otomatik Bilgi Anlaşması:</strong> “Gelirimi bildirdim mi?”
+                                        stresinden kurtarıyoruz sizi.</li>
+                                    <li><strong>Ev alım-satımı & tapu işleri:</strong> Siz Almanya’da kalın, biz
+                                        Türkiye’den yürütelim işlerinizi.</li>
+                                    <li><strong>Aile içi meseleler:</strong> Nafaka, velayet, mal paylaşımı...</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-item">
+                        <div
+                            class="carousel-caption d-flex flex-column justify-content-center align-items-start text-start">
+
+                            <div class="row"
+                                style="position: relative; z-index: 1; background-color: rgba(236, 234, 229, 0.85); padding: 1rem 0.8rem; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); width: 100%; top: 0;">
+                                <div class="w-100 text-center">
+                                    <h3
+                                        style="color: #88001b; font-weight: bold; font-size: 1.4rem; margin-bottom: 0.4rem;">
+                                        Türkiye'deki işleriniz emin ellerde...</h3>
+                                    <img src="assets/images/adalet11.jpg" alt=""
+                                        style="width: 100%; height: 4rem; object-fit: cover; opacity: 0.5; position: relative; top: 0; left: 0; ;">
+
+                                </div>
+
+                                <ul style="list-style: square;  font-size: 1.1rem; line-height: 1.6;">
+                                    <li>Emekli mi olacaksınız?</li>
+                                    <li>Miras mı kaldı?</li>
+                                    <li>Boşanma işlemleriniz eksik mi kaldı?</li>
+                                    <li>Vergi dairesinden mi arandınız?</li>
+                                    <li>Tapuda işiniz mi var?</li>
+                                    <li>Bir alacağınızı tahsil edemiyor musunuz?</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-item" style="background-color: #d3dac0; height: auto; min-height: 400px;">
+                        <div
+                            class="carousel-caption d-flex flex-column justify-content-center align-items-start text-start">
+
+                            <div class="row"
+                                style="position: relative; z-index: 1; background-color: rgba(236, 234, 229, 0.85); padding: 1rem 0.8rem; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); width: 100%; top: 0;">
+                                <div class="w-100 text-center">
+                                    <h3
+                                        style="color: #88001b; font-weight: bold; font-size: 1.4rem; margin-bottom: 0.4rem;">
+                                        Almanya'da eğitim ve yerleşim...</h3>
+                                    <img src="assets/images/adalet11.jpg" alt=""
+                                        style="width: 100%; height: 4rem; object-fit: cover; opacity: 0.5; position: relative; top: 0; left: 0; ;">
+
+                                </div>
+                                <ul style="list-style: square;  font-size: 1.1rem; line-height: 1.6;">
+                                    <li>Ulusal Vize Başvuruları</li>
+                                    <li>Nitelikli İş Gücü Vizesi</li>
+                                    <li>Mavi Kart</li>
+                                    <li>Denklik</li>
+                                    <li>Öğrenci Vizesi</li>
+                                    <li>Aile Birleşimi</li>
+                                    <li>Oturum İzni</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#colorCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#colorCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark"></span>
+                </button>
+            </div>
+
+
+
+            <!--carouselin sonu-->
+
+
+
+
+        </div>
+    </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="text-center">
+            Can Hukuk Bürosu. MiA e.V. Adenauerallee 8 20097 Hamburg -&copy; 2025 Tüm hakları saklıdır.
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+</body>
+
+</html>
